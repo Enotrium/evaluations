@@ -1,0 +1,10 @@
+include *.md
+include *.txt
+include *.yaml
+include *.yml
+include *.toml
+recursive-include evals *.py
+recursive-include evals *.yaml
+recursive-include evals *.json
+recursive-include docs *.md
+recursive-include examples *.ipynb

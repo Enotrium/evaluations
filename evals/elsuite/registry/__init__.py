@@ -1,0 +1,1 @@
+"""Registry — elsuite registry configuration."""
