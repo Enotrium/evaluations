@@ -55,7 +55,10 @@ def _status_command() -> int:
 
     # Arthedain discovery
     try:
-        from evals.elsuite.prompt.arthedain_adapter import find_arthedain, get_arthedain_version
+        from evals.elsuite.prompt.arthedain_adapter import (
+            find_arthedain,
+            get_arthedain_version,
+        )
 
         found = find_arthedain()
         if found:

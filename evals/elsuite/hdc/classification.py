@@ -37,7 +37,9 @@ class HDCClassificationEval(SolverEval):
         solver = self._make_arthedain_solver()
         if solver is not None:
             return solver
-        return _StandaloneHDCClassifier(dim=self.config.dim, n_classes=self.config.n_classes)
+        return _StandaloneHDCClassifier(
+            dim=self.config.dim, n_classes=self.config.n_classes
+        )
 
     def run(self) -> EvalResult:
         np.random.seed(self.config.seed)

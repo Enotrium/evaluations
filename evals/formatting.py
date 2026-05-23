@@ -15,7 +15,9 @@ def format_result(metrics: dict[str, Any], indent: int = 2) -> str:
         elif isinstance(value, (int, str)):
             lines.append(f"{prefix}{key}: {value}")
         elif isinstance(value, (list, tuple)) and len(value) <= 10:
-            formatted = ", ".join(f"{v:.4f}" if isinstance(v, float) else str(v) for v in value)
+            formatted = ", ".join(
+                f"{v:.4f}" if isinstance(v, float) else str(v) for v in value
+            )
             lines.append(f"{prefix}{key}: [{formatted}]")
         elif isinstance(value, dict):
             lines.append(f"{prefix}{key}:")

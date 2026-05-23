@@ -10,6 +10,7 @@ from typing import Any, Optional
 @dataclass
 class CompletionResult:
     """Result from a completion function call."""
+
     text: str = ""
     logprobs: Optional[list[float]] = None
     tokens: Optional[list[str]] = None
@@ -21,5 +22,4 @@ class CompletionFn(ABC):
     """Abstract completion function that wraps model execution."""
 
     @abstractmethod
-    def complete(self, prompt: str, **kwargs) -> CompletionResult:
-        ...
+    def complete(self, prompt: str, **kwargs) -> CompletionResult: ...

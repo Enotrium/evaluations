@@ -4,7 +4,7 @@ from evals.base import BaseEval, EvalConfig, EvalResult
 from evals.api import EvalRegistry, register, list_evals
 
 
-class TestEvalA(BaseEval):
+class DummyEvalA(BaseEval):
     name = "test.a"
     config = EvalConfig()
 
@@ -12,7 +12,7 @@ class TestEvalA(BaseEval):
         return EvalResult(name=self.name, metrics={"score": 1.0})
 
 
-class TestEvalB(BaseEval):
+class DummyEvalB(BaseEval):
     name = "test.b"
     config = EvalConfig()
 
@@ -21,31 +21,31 @@ class TestEvalB(BaseEval):
 
 
 def test_register():
-    EvalRegistry.register("test.a", TestEvalA, force=True)
-    EvalRegistry.register("test.b", TestEvalB, force=True)
+    EvalRegistry.register("test.a", DummyEvalA, force=True)
+    EvalRegistry.register("test.b", DummyEvalB, force=True)
     assert "test.a" in EvalRegistry.list()
     assert "test.b" in EvalRegistry.list()
 
 
 def test_get():
     cls = EvalRegistry.get("test.a")
-    assert cls is TestEvalA
+    assert cls is DummyEvalA
 
 
 def test_run():
-    EvalRegistry.register("test.a", TestEvalA, force=True)
+    EvalRegistry.register("test.a", DummyEvalA, force=True)
     result = EvalRegistry.run("test.a")
     assert result.metrics["score"] == 1.0
 
 
 def test_list_filter():
-    EvalRegistry.register("test.a", TestEvalA, force=True)
-    EvalRegistry.register("test.b", TestEvalB, force=True)
+    EvalRegistry.register("test.a", DummyEvalA, force=True)
+    EvalRegistry.register("test.b", DummyEvalB, force=True)
     names = EvalRegistry.list(prefix="test")
     assert "test.a" in names
     assert "test.b" in names
 
 
 def test_register_convenience():
-    register("test.new", TestEvalA)
+    register("test.new", DummyEvalA)
     assert "test.new" in list_evals()

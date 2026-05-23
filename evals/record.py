@@ -6,7 +6,6 @@ from pathlib import Path
 
 from .base import EvalResult
 
-
 RECORDS_DIR = Path("results")
 
 
