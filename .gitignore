@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 *.pyo
+*.py[cod]
 *.egg-info/
 build/
 dist/

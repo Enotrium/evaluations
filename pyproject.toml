@@ -31,6 +31,11 @@ dev = [
     "pre-commit>=3.0.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/Enotrium/evaluations"
+Repository = "https://github.com/Enotrium/evaluations"
+Issues = "https://github.com/Enotrium/evaluations/issues"
+
 [project.scripts]
 oaieval = "evals.cli.oaieval:main"
 oaievalset = "evals.cli.oaievalset:main"
@@ -41,3 +46,7 @@ packages = ["evals"]
 [tool.mypy]
 ignore_missing_imports = true
 python_version = "3.9"
+
+[tool.black]
+target-version = ["py39"]
+line-length = 88

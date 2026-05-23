@@ -79,5 +79,5 @@ class _StandaloneBCIDecoder:
 
     def predict(self, signal: np.ndarray) -> int:
         """Decode by power band ratios."""
-        power = np.mean(signal ** 2)
+        power = np.mean(signal**2)
         return int(power * 100) % 4

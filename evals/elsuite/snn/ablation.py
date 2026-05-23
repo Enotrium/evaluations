@@ -40,26 +40,37 @@ class AblationEval(SolverEval):
         np.random.seed(self.config.seed)
 
         # Generate random test data
-        X_test = np.random.randn(self.config.n_samples_test, self.config.dim).astype(np.float32)
-        y_test = np.random.randint(0, self.config.n_classes, size=self.config.n_samples_test)
+        X_test = np.random.randn(self.config.n_samples_test, self.config.dim).astype(
+            np.float32
+        )
+        y_test = np.random.randint(
+            0, self.config.n_classes, size=self.config.n_samples_test
+        )
 
         metrics = {}
 
         # Full model accuracy
-        correct_full = sum(1 for i in range(len(X_test))
-                           if self.solver.predict(X_test[i]) == y_test[i])
+        correct_full = sum(
+            1 for i in range(len(X_test)) if self.solver.predict(X_test[i]) == y_test[i]
+        )
         full_acc = correct_full / len(X_test)
         metrics["accuracy_full"] = full_acc
 
         # Ablate fast trace
-        correct_abl = sum(1 for i in range(len(X_test))
-                          if self.solver.predict_ablated(X_test[i], ablate="fast") == y_test[i])
+        correct_abl = sum(
+            1
+            for i in range(len(X_test))
+            if self.solver.predict_ablated(X_test[i], ablate="fast") == y_test[i]
+        )
         metrics["accuracy_no_fast"] = correct_abl / len(X_test)
         metrics["drop_no_fast"] = full_acc - (correct_abl / len(X_test))
 
         # Ablate slow trace
-        correct_abl = sum(1 for i in range(len(X_test))
-                          if self.solver.predict_ablated(X_test[i], ablate="slow") == y_test[i])
+        correct_abl = sum(
+            1
+            for i in range(len(X_test))
+            if self.solver.predict_ablated(X_test[i], ablate="slow") == y_test[i]
+        )
         metrics["accuracy_no_slow"] = correct_abl / len(X_test)
         metrics["drop_no_slow"] = full_acc - (correct_abl / len(X_test))
 
@@ -81,5 +92,7 @@ class _StandaloneSNNSolver:
         return int(np.argmax(x @ self.w))
 
     def predict_ablated(self, x: np.ndarray, ablate: str = "fast") -> int:
-        w_noisy = self.w * (1.0 + 0.1 * np.random.randn(*self.w.shape).astype(np.float32))
+        w_noisy = self.w * (
+            1.0 + 0.1 * np.random.randn(*self.w.shape).astype(np.float32)
+        )
         return int(np.argmax(x @ w_noisy))
