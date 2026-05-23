@@ -20,14 +20,15 @@ from pathlib import Path
 
 import numpy as np
 
-
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class EvalConfig:
     """Configuration for a single eval run."""
+
     name: str = ""
     seed: int = 42
     device: str = "cpu"
@@ -44,6 +45,7 @@ class EvalConfig:
 # Results container
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class EvalResult:
     """
@@ -57,6 +59,7 @@ class EvalResult:
         error       — error message if failed
         result_id   — unique UUID for this result
     """
+
     name: str
     status: str = "completed"
     metrics: dict[str, Any] = field(default_factory=dict)
@@ -113,6 +116,7 @@ def _serializable(obj: Any) -> Any:
 # ---------------------------------------------------------------------------
 # Abstract base eval
 # ---------------------------------------------------------------------------
+
 
 class BaseEval(ABC):
     """Abstract base for all evaluations.

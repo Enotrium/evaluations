@@ -10,10 +10,10 @@ import numpy as np
 
 from .base import EvalResult
 
-
 # ---------------------------------------------------------------------------
 # MetricSuite — collection of results for a single eval
 # ---------------------------------------------------------------------------
+
 
 class MetricSuite:
     """Aggregate multiple EvalResult objects for the same eval.
@@ -64,6 +64,7 @@ class MetricSuite:
 # Compare — load & compare multiple MetricSuites
 # ---------------------------------------------------------------------------
 
+
 class Compare:
     """Load results from a directory and produce comparison tables."""
 
@@ -93,7 +94,9 @@ class Compare:
         if not self.results_by_eval:
             return "No results found."
 
-        suites = {name: MetricSuite(results) for name, results in self.results_by_eval.items()}
+        suites = {
+            name: MetricSuite(results) for name, results in self.results_by_eval.items()
+        }
         all_metrics: list[str] = []
         for s in suites.values():
             all_metrics.extend(s.metric_names)
@@ -112,7 +115,9 @@ class Compare:
         return "\n".join(lines)
 
     def to_dict(self) -> dict[str, Any]:
-        suites = {name: MetricSuite(results) for name, results in self.results_by_eval.items()}
+        suites = {
+            name: MetricSuite(results) for name, results in self.results_by_eval.items()
+        }
         result: dict[str, Any] = {}
         for name, suite in suites.items():
             result[name] = {}

@@ -6,7 +6,9 @@ def register_all():
     from evals.api import EvalRegistry
     from .fixed_point import FixedPointQuantizationEval
 
-    EvalRegistry.register("hardware.fixed_point_quantization", FixedPointQuantizationEval)
+    EvalRegistry.register(
+        "hardware.fixed_point_quantization", FixedPointQuantizationEval
+    )
 
 
 register_all()

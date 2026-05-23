@@ -12,14 +12,13 @@ import numpy as np
 from evals.base import EvalConfig, EvalResult
 from evals.elsuite.prompt.base import SolverEval
 
-
 # Horowitz 2014 energy per 45nm operation (pJ)
 ENERGY_MAP = {
-    "add": 0.9,       # pJ for INT32 add
-    "mul": 3.7,       # pJ for INT32 multiply
-    "mac": 4.6,       # pJ for INT32 multiply-accumulate
+    "add": 0.9,  # pJ for INT32 add
+    "mul": 3.7,  # pJ for INT32 multiply
+    "mac": 4.6,  # pJ for INT32 multiply-accumulate
     "mem_read": 5.0,  # pJ per SRAM read (64-bit)
-    "mem_write": 5.0, # pJ per SRAM write
+    "mem_write": 5.0,  # pJ per SRAM write
 }
 
 
@@ -51,10 +50,7 @@ class EnergyComparisonEval(SolverEval):
         # --- HDC energy estimation ---
         hdc_macs = cfg.hdc_dim
         hdc_adds = cfg.hdc_dim + cfg.n_classes * cfg.hdc_dim
-        energy_hdc_pj = (
-            hdc_macs * ENERGY_MAP["mac"]
-            + hdc_adds * ENERGY_MAP["add"]
-        )
+        energy_hdc_pj = hdc_macs * ENERGY_MAP["mac"] + hdc_adds * ENERGY_MAP["add"]
         energy_nj_hdc = energy_hdc_pj / 1000.0
 
         # --- SNN energy estimation (single timestep) ---
@@ -89,10 +85,18 @@ class EnergyComparisonEval(SolverEval):
                 "energy_nJ_mlp": energy_nj_mlp,
                 "energy_nJ_transformer": energy_nj_transformer,
                 "energy_uJ_transformer": energy_uj_transformer,
-                "ratio_hdc_vs_transformer": energy_nj_transformer / energy_nj_hdc if energy_nj_hdc > 0 else 0,
-                "ratio_snn_vs_transformer": energy_nj_transformer / energy_nj_snn if energy_nj_snn > 0 else 0,
-                "ratio_hdc_vs_mlp": energy_nj_mlp / energy_nj_hdc if energy_nj_hdc > 0 else 0,
-                "ratio_snn_vs_mlp": energy_nj_mlp / energy_nj_snn if energy_nj_snn > 0 else 0,
+                "ratio_hdc_vs_transformer": (
+                    energy_nj_transformer / energy_nj_hdc if energy_nj_hdc > 0 else 0
+                ),
+                "ratio_snn_vs_transformer": (
+                    energy_nj_transformer / energy_nj_snn if energy_nj_snn > 0 else 0
+                ),
+                "ratio_hdc_vs_mlp": (
+                    energy_nj_mlp / energy_nj_hdc if energy_nj_hdc > 0 else 0
+                ),
+                "ratio_snn_vs_mlp": (
+                    energy_nj_mlp / energy_nj_snn if energy_nj_snn > 0 else 0
+                ),
             },
             metadata={"config": cfg.to_dict()},
         )

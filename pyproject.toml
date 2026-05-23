@@ -41,3 +41,7 @@ packages = ["evals"]
 [tool.mypy]
 ignore_missing_imports = true
 python_version = "3.9"
+
+[tool.black]
+target-version = ["py39"]
+line-length = 88

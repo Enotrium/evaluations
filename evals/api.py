@@ -8,7 +8,6 @@ from typing import Any, Optional
 
 from .base import BaseEval, EvalConfig, EvalResult
 
-
 # ---------------------------------------------------------------------------
 # Registry
 # ---------------------------------------------------------------------------
@@ -112,7 +111,11 @@ class EvalRegistry:
             mod = importlib.import_module(full_module)
             for attr_name in dir(mod):
                 attr = getattr(mod, attr_name)
-                if isinstance(attr, type) and issubclass(attr, BaseEval) and attr is not BaseEval:
+                if (
+                    isinstance(attr, type)
+                    and issubclass(attr, BaseEval)
+                    and attr is not BaseEval
+                ):
                     if name not in cls._registry:
                         cls.register(name, attr)
                         return
@@ -128,9 +131,7 @@ def _auto_discover_all() -> None:
         return
 
     def _walk(pkg_module, prefix: str):
-        for info in pkgutil.walk_packages(
-            pkg_module.__path__, prefix=f"{prefix}."
-        ):
+        for info in pkgutil.walk_packages(pkg_module.__path__, prefix=f"{prefix}."):
             if info.ispkg:
                 try:
                     mod = importlib.import_module(info.name)
@@ -149,6 +150,7 @@ def _auto_discover_all() -> None:
 # ---------------------------------------------------------------------------
 # Convenience aliases
 # ---------------------------------------------------------------------------
+
 
 def register(name: str, eval_cls: type[BaseEval]) -> None:
     """Top-level convenience function to register an eval."""

@@ -57,8 +57,9 @@ class FORCE2BenchmarkEval(SolverEval):
         train_time = time.perf_counter() - t0
 
         # Evaluate test set
-        correct = sum(1 for i in range(n_test)
-                      if self.solver.predict(X_test[i]) == y_test[i])
+        correct = sum(
+            1 for i in range(n_test) if self.solver.predict(X_test[i]) == y_test[i]
+        )
         accuracy = correct / n_test
 
         return EvalResult(
@@ -78,6 +79,7 @@ class FORCE2BenchmarkEval(SolverEval):
 
 class _StandaloneFORCE2:
     """Minimal FORCE v2 baseline."""
+
     def __init__(self):
         self.w = np.random.randn(10, 5).astype(np.float32) * 0.1
         self.lr = 0.01

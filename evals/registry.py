@@ -51,7 +51,11 @@ class Registry:
         registered = []
         for attr_name in dir(mod):
             attr = getattr(mod, attr_name)
-            if isinstance(attr, type) and issubclass(attr, BaseEval) and attr is not BaseEval:
+            if (
+                isinstance(attr, type)
+                and issubclass(attr, BaseEval)
+                and attr is not BaseEval
+            ):
                 name = getattr(attr, "name", attr_name.lower())
                 EvalRegistry.register(name, attr)
                 registered.append(name)

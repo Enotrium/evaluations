@@ -23,7 +23,9 @@ class HDCRobustnessConfig(EvalConfig):
     n_features: int = 64
     n_classes: int = 4
     dim: int = 4096
-    description: str = "HDC fault tolerance under bit-flip and stuck-at-fault conditions"
+    description: str = (
+        "HDC fault tolerance under bit-flip and stuck-at-fault conditions"
+    )
 
 
 class HDCRobustnessEval(SolverEval):
@@ -36,7 +38,9 @@ class HDCRobustnessEval(SolverEval):
         solver = self._make_arthedain_solver()
         if solver is not None:
             return solver
-        return _StandaloneHDCClassifier(dim=self.config.dim, n_classes=self.config.n_classes)
+        return _StandaloneHDCClassifier(
+            dim=self.config.dim, n_classes=self.config.n_classes
+        )
 
     def run(self) -> EvalResult:
         np.random.seed(self.config.seed)
@@ -52,8 +56,9 @@ class HDCRobustnessEval(SolverEval):
             self.solver.train(xi, yi)
 
         # Clean accuracy
-        correct_clean = sum(1 for xi, yi in zip(X_test, y_test)
-                            if self.solver.predict(xi) == yi)
+        correct_clean = sum(
+            1 for xi, yi in zip(X_test, y_test) if self.solver.predict(xi) == yi
+        )
         clean_acc = correct_clean / len(X_test)
 
         metrics = {"accuracy_clean": clean_acc}
@@ -75,10 +80,18 @@ class HDCRobustnessEval(SolverEval):
                 )
 
         # Overall fault tolerance score (average relative accuracy)
-        fault_accs = [v for k, v in metrics.items() if k.startswith("accuracy_") and k != "accuracy_clean"]
-        metrics["fault_tolerance_score"] = float(np.mean(fault_accs) / clean_acc if clean_acc > 0 else 0.0)
+        fault_accs = [
+            v
+            for k, v in metrics.items()
+            if k.startswith("accuracy_") and k != "accuracy_clean"
+        ]
+        metrics["fault_tolerance_score"] = float(
+            np.mean(fault_accs) / clean_acc if clean_acc > 0 else 0.0
+        )
 
-        return EvalResult(name=self.name, metrics=metrics, metadata={"config": self.config.to_dict()})
+        return EvalResult(
+            name=self.name, metrics=metrics, metadata={"config": self.config.to_dict()}
+        )
 
 
 class _StandaloneHDCClassifier:
@@ -104,7 +117,11 @@ class _StandaloneHDCClassifier:
 
     def predict(self, x: np.ndarray) -> int:
         hv = self._encode(x)
-        mem = self._faulty_memory if self._faulty_memory is not None else self.assoc_memory
+        mem = (
+            self._faulty_memory
+            if self._faulty_memory is not None
+            else self.assoc_memory
+        )
         sims = mem @ hv
         return int(np.argmax(sims))
 
