@@ -9,7 +9,7 @@ Why this repo exists
 - Reproducible runs with serialized results for easy comparison and sharing.
 - Integrates with Arthedain where available, otherwise uses standalone implementations.
 
-Quick Start
+Start
 ----------
 Install the project for development and run a quick demo from the CLI.
 
