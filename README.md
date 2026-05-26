@@ -4,7 +4,6 @@
 
 Evaluations is an open, opinionated registry and framework for reproducible benchmarking of Spiking Neural Networks (SNNs) and Hyperdimensional Computing (HDC) systems. It provides a small, consistent API and CLI to run, compare, and share evaluation results.
 
-Why this repo exists
 - Single place to discover community and in-house benchmarks for SNN/HDC research.
 - Reproducible runs with serialized results for easy comparison and sharing.
 - Integrates with Arthedain where available, otherwise uses standalone implementations.
